@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="css/reset.css">
+		<style type="text/css">
+		    hhml {
+		    	width: 100%;
+		    	height: 100%
+		    	overflow:hidden;
+		    }
+			body {
+				text-align: left;
+				width: 100%;
+				overflow: hidden;
+				background: #e9dfc7;
+			}
+			.m-read-content {
+				font-size: 14px;
+				color: #555;
+				line-height: 31px;
+				padding: 15px;
+			}
+			.m-read-content h4 {
+				font-size: 20px;
+				color: #736357;
+				border-bottom: solid 1px #736357;
+				letter-spacing: 2px;
+				margin: 0 0 0.5em 0;
+			}
+			.m-read-content p {
+                text-indent: 2em;
+                margin: 0.5em 0;
+                letter-spacing: 0em;
+                line-height: 24px;
+			}
+			.u-tab {
+				height: 34px;
+				margin: 10px auto;
+				line-height: 34px;
+				border-radius: 8px;
+				border: solid 1px #858382;
+				font-size: 14px;
+				background: #000;
+				opacity: 0.9;
+			}
+			.u-tab li {
+				display: inline-block;
+				width: 49%;
+				border-right: 1px solid #858382;
+				text-align: center;
+				color: #fff;
+			}
+			.u-tab li:nth-child(2) {
+				border-right: none;
+			}
+			.m-button-bar {
+				width: 70%;
+				max-width: 800px;
+				margin: 0 auto;
+                padding: 5px;
+			}
+			.top-nav {
+				position: fixed;
+				top: 0px;
+				height: 50px;
+				width: 100%;
+                z-index: 9999;
+				background: #000;
+				opacity: 0.9;
+			}
+			.icon-back {
+				position: absolute;
+				top:14px;
+				left: 10px;
+                height: 23px;
+                width: 23px;
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkJGMkEyQkQxMjdBNDExRTU4NjA2QTJDMjFDQ0I0ODhEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkJGMkEyQkQyMjdBNDExRTU4NjA2QTJDMjFDQ0I0ODhEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkYyQTJCQ0YyN0E0MTFFNTg2MDZBMkMyMUNDQjQ4OEQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QkYyQTJCRDAyN0E0MTFFNTg2MDZBMkMyMUNDQjQ4OEQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4Ia560AAAHWklEQVR42uyd7W9U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);
+                background-size:contain;
+			}
+			.nav-title {
+				position: absolute;
+				top: 16px;
+				left: 42px;
+				color: #d5d5d6;
+			}
+			
+
+			//**字体唤出面板**//
+            .nav-pannnel-bk {
+            	position: fixed;
+            	bottom:70px;
+            	width: 100%;
+            	height: 135px;
+            	background:#000;
+            	opacity: 0.9;
+            	z-index: 10001;
+            }
+            .nav-pannnel {
+            	position: fixed;
+            	bottom: 70px;
+            	width: 100%;
+            	height: 135px;
+            	background: none;
+                z-index: 10002;
+            }
+            .child-mod {
+            	padding: 5px 10px;
+            	margin:15px;
+            }
+            .child-mod span{
+                display: inline-block;
+                padding-right: 20px;
+                padding-left: 10px;
+            }
+            .font-size-button {
+            	background: none;
+            	border: 1px #bcbcbc solid;
+            	color: #fff;
+            	border-radius: 16px;
+            	padding: 5px 40px; 
+            }
+            .child-mod button:nth-child(2){
+            	margin-right: 10px;
+            }
+            .bk-container {
+            	position: relative;
+            	width: 30px;
+            	height: 30px;
+            	border-radius: 15px;
+            	background: #fff;
+            	display: inline-block;
+            	vertical-align: -14px;
+            	margin: 0 5px;	
+            }
+            .bk-container-current {
+            	position: absolute;
+            	width: 32px;
+            	height: 32px;
+            	border-radius: 16px;
+            	border: 1px #ff7800 solid;
+                display: inline-block;
+                top:-2px;
+                left:-2px;
+            }
+
+            //**底层操作面板式样**//
+
+            //**中间层触摸面板式样**//
+            .artical-action-mid {
+            	position: fixed;
+            	z-index: 10003;
+            	width: 100%;
+            	height: 40%;
+            	top:30%;
+            }
+		</style>
+	</head>
+	<body>
+	    <div id="root" class="container">
+	    	<div class="m-artical-action">
+	    		<div class="artical-action-mid" id="action_mid"></div>
+	    	</div>
+	    	<div id="top-nav" class="top-nav" style="display:none">
+	    		<div class="icon-back"></div>
+	    		<div class="nav-title">返回书城</div>
+	    	</div>
+	        <div id="fition_chapter_title"></div>
+	        <div id="fition_container" class="m-read-content">
+	            <h4>深受高富帅喜欢的4个星座女</h4>
+	            <p>
+	              金牛座
+                  勤劳朴实的金牛座女往往能俘获高帅富的心，幸福是奋斗出来的，金牛座女潜力无限。她们上得厅堂下得厨房，能处处为别人着想。
+                  金牛座女可以是职场上的干练精英人士也可以是生活中的居家能手，能帮助高富帅经营家族生意，也可以为他们操劳生意上的大事。
+                  不喜欢奢侈的生活，朴实无华的气质能让她们超凡脱俗，备受青睐。  
+	            </p>
+	            <p>
+	              金牛座
+                  勤劳朴实的金牛座女往往能俘获高帅富的心，幸福是奋斗出来的，金牛座女潜力无限。她们上得厅堂下得厨房，能处处为别人着想。
+                  金牛座女可以是职场上的干练精英人士也可以是生活中的居家能手，能帮助高富帅经营家族生意，也可以为他们操劳生意上的大事。
+                  能帮助高富帅经营家族生意，也可以为他们操劳生意上的大事。不喜欢奢侈的生活，朴实无华的气质能让她们超凡脱俗，备受青睐。
+	            <p>
+	              金牛座
+                  勤劳朴实的金牛座女往往能俘获高帅富的心，幸福是奋斗出来的，金牛座女潜力无限。她们上得厅堂下得厨房，能处处为别人着想。
+                  金牛座女可以是职场上的干练精英人士也可以是生活中的居家能手，能帮助高富帅经营家族生意，也可以为他们操劳生意上的大事。
+                  不喜欢奢侈的生活，朴实无华的气质能让她们超凡脱俗，备受青睐。1：金牛座
+                  勤劳朴实的金牛座女往往能俘获高帅富的心，幸福是奋斗出来的，金牛座女潜力无限。她们上得厅堂下得厨房，能处处为别人着想。
+                  金牛座女可以是职场上的干练精英人士也可以是生活中的居家能手，能帮助高富帅经营家族生意，也可以为他们操劳生意上的大事。
+                  不喜欢奢侈的生活，朴实无华的气质能让她们超凡脱俗，备受青睐。 
+	        </div>
+	        <div class="m-button-bar">
+	            <ul class="u-tab">
+	                <li id="prev_button">上一章</li>
+	                <li id="next_button">下一章</li>
+	            </ul>
+	        </div>
+	        <div class="bottom-nav-bk bottom_nav" style="display:none"></div>
+	        <div class="bottom-nav bottom_nav">
+	        	<div class="item meau-button" id="meau-button">
+	        		<div class="item-wrap">
+	        			<div class="icon-meau"></div>
+	        			<div class="icon-text">
+	        				目录
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div class="item" id="font_button">
+	        		<div class="item-wrap">
+	        			<div class="icon-ft"></div>
+	        			<div class="icon-text">
+	        				字体
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div class="item" id="night_button">
+	        		<div class="item-wrap" id="night_button">
+	        			<div class="icon-day"></div>
+	        			<div class="icon-text">
+	        				日间
+	        			</div>
+	        		</div>
+	        		<div class="item-wrap" id="night_button" style="display:none">
+	        			<div class="icon-night"></div>
+	        			<div class="icon-text">
+	        				夜间
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div  style="clear:both" class="nav-pannnel-bk" style="dispaly:none"></div>
+	        <div id=" font-container" class="nav-pannel font-container" style="display:none">
+	        	<div class="child-mod">
+	        		<span >字号</span>
+	        		<button id="large-font" class="font-size-button">大</button>
+	        		<button id="small-font" class="font-size-button">小</button>
+	        	</div>
+	        	<div class="child-mod">
+	        		<span>背景</span>
+	        	    <div class="bk-container">
+	        	    	<div class="bk-container-current"></div>
+	        	    </div>
+	        	    <div class="bk-container">
+	        	    	<div class="bk-container-current"></div>
+	        	    </div>
+	        	    <div class="bk-container">
+	        	    	<div class="bk-container-current"></div>
+	        	    </div>
+	        	    <div class="bk-container">
+	        	    	<div class="bk-container-current"></div>
+	        	    </div>
+	        	</div>
+	        </div>
+	        </div>
+		<script src="lib/zepto.min.js"></script>
+		<script>
+			window.jQuery = $;
+		</script>
+		<script src="js/jquery.base64.js"></script>
+		<script src="js/jquery.jsonp.js"></script>
+
+		<script>
+			(function(){
+                var Util = (function(){
+                	var prefix = 'html5_reader_'
+                	var StorageGetter = function(key){
+                        return localStorage.getItem(prefix + key);
+                	}
+                	var StorageSetter = function(key,val){
+                        return localStorage.setItem(prefix + key,val);
+                	}
+                	return {
+                		StorageGetter:StorageGetter,
+                		StorageSetter:StorageSetter
+                    }
+                })();
+                var Dom = {
+                	top_nav:$('#top_nav'),
+                	bottom_nav:$('.bottom-nav'),
+                	font_container:$('.font-container'),
+                	font_button:$('#font-button')
+                }
+
+                var Win = $(window);
+                var Doc = $(document);
+                var RootContainer = $('#fition_container');
+                var initFontSize = Util.StorageGetter('font_size');
+                initFontSize = parseInt('initFontSize');
+                if(!initFontSize){
+                	initFontSize = 14;
+                }
+                RootContainer.css('font-size',initFontSize);
+                function main(){
+                	//todo 整个项目的入口函数
+                	EventHanlder();
+                }
+
+                function ReaderModel(){
+                	//todo 实现与阅读器相关的数据交互的方法
+
+                }
+
+                function ReaderBaseFrame(){
+                	//todo 渲染基本的UI结构
+                }
+                
+                function EventHanlder(){
+                	//todo 交互的事件绑定
+                	//touch
+                	//zepto tap
+                	$('#action_mid').click(function() {
+                		if (Dom.top_nav.css('display') == 'none'){
+                            Dom.bottom_nav.show();
+                            Dom.top_nav.show();
+                		}else{
+                            Dom.bottom_nav.hide();
+                            Dom.top_nav.hide();
+                            Dom.font_container.hide;
+                            Dom.font_button.removeClass('current');
+                		}
+                	});
+
+                	win.scroll(function(){
+                		Dom.bottom_nav.hide();
+                        Dom.top_nav.hide();
+                        Dom.font_container.hide;
+                        Dom.font_button.removeClass('current');
+                	});
+                    
+                    Dom.font_button.click(function(){
+                        if(Dom.font_container.css('display') == 'none'){
+                           Dom.font_container.show;
+                           Dom.font_button.addClass('current');
+                        }else{
+                           Dom.font_container.hide;
+                           Dom.font_button.removeClass('current');
+                        }
+                    });
+                    if('#night_button').click(function(){
+                    	//触发背景切换的事件
+
+                    });
+
+                    if('#large-font').click(function() {
+                    	if(initFontSize > 20){
+                    		return;
+                    	}
+                    	initFontSize += 1;
+                    	RootContainer.css('font-size',initFontSize);
+                    	Util.StorageSetter('font_size',initFontSize);
+                    });	
+                    
+                    if('#small-font').click(function() {
+                    	if(initFontSize < 12){
+                    		return;
+                    	}
+                    	initFontSize -= 1;
+                    	RootContainer.css('font-size',initFontSize);
+                    	Util.StorageSetter('font_size',initFontSize);
+                    });	
+
+                }
+                main();
+			})();
+		</script>
+	</body>
+</html>
